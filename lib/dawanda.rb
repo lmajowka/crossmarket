@@ -6,7 +6,9 @@ class Dawanda < Crawler
 
   def self.seller_link_and_name(product_id)
     doc = product_page(product_id)
+    return unless doc
     seller_link = doc.at('.vcard a')
+    return unless seller_link
     return seller_link['data-href'], seller_link.text
   end
 
