@@ -1,4 +1,5 @@
 require 'dawanda'
+require 'etsy'
 
 class TestController < ApplicationController
 
@@ -19,6 +20,11 @@ class TestController < ApplicationController
     DawandaUser.where(location: nil).each do |dw|
       dw.fetch_user_info
     end
+  end
+
+  def get_etsy_info
+    #https://www.etsy.com/shop/elcofredelena
+    etsy = Etsy.new 'https://www.etsy.com/people/RowanberryGlass'
   end
 
 end
