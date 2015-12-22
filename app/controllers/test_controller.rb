@@ -4,7 +4,7 @@ class TestController < ApplicationController
 
   def get_dawanda_users
     created = 0
-    (56868..87165251).each do |product_id|
+    (87000000..87165251).each do |product_id|
       link, name = Dawanda.seller_link_and_name(product_id)
       next if link.nil?
       dawanda_user = DawandaUser.new(url: link, name: name)
@@ -16,8 +16,9 @@ class TestController < ApplicationController
   end
 
   def fetch_users_data
-    user = DawandaUser.last
-    user.fetch_user_info
+    DawandaUser.where(location: nil).each do |dw|
+      dw.fetch_user_info
+    end
   end
 
 end
