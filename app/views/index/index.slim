@@ -1,3 +1,11 @@
 h1
   | Cross marketplace Identity matcher between Etsy & Dawanda
 
+- @results.each do |result|
+
+  div
+    ul
+      li
+        = result[:etsy]
+      li
+        = result[:dawanda_user]

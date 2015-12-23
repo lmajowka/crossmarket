@@ -20,6 +20,10 @@ class DawandaUser < ActiveRecord::Base
     )
   end
 
+  def name_similarity(name_to_compare)
+    name.similar name_to_compare
+  end
+
   private
 
   def extract_location_from_user_header(user_header_inner)

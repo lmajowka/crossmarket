@@ -2,6 +2,8 @@ require 'crawler'
 
 class Etsy < Crawler
 
+  attr_accessor :name, :about
+
   def initialize(url)
     @name, @about = get_info(url)
   end
