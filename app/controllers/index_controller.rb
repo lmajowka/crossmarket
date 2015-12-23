@@ -26,8 +26,8 @@ class IndexController < ApplicationController
 
   def get_dawanda_user_for(etsy)
 
-    [:name, :about].each do |esty_attribute|
-      dw_results = DawandaUser.search etsy.send(esty_attribute)
+    [:name, :about, :location].each do |esty_attribute|
+      dw_results = DawandaUser.search etsy.send(esty_attribute), fields: ["name^10", "about^2", "location"]
       dw_results.each do |dw|
         similarity = dw.attribute_similarity esty_attribute, etsy.send(esty_attribute)
         if similarity > SIMILARITY_THRESHOLD
@@ -47,7 +47,9 @@ class IndexController < ApplicationController
         'https://www.etsy.com/people/hertadesign',
         'https://www.etsy.com/people/Herzisstoffwelt',
         'https://www.etsy.com/people/fashionfrill',
-        'https://www.etsy.com/people/doloopleather'
+        'https://www.etsy.com/people/doloopleather',
+        'https://www.etsy.com/people/pulpsushi',
+        'https://www.etsy.com/people/EllaOsix'
     ]
   end
 
