@@ -6,6 +6,11 @@ h1
   div
     ul
       li
-        = result[:etsy]
-      li
-        = result[:dawanda_user]
+        = link_to result[:etsy], result[:etsy]
+      ul
+        li
+          - dw_url = Dawanda::ROOT_URL % result[:dawanda_user][:url]
+          = link_to dw_url, dw_url
+        li
+          = result[:similarity].round(2)
+          | %

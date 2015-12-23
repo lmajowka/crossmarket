@@ -10,32 +10,33 @@ class IndexController < ApplicationController
 
     etsy_identities.each do |etsy_identity|
       etsy = Etsy.new etsy_identity
-      dawanda_user = get_dawanda_user_for etsy
+      dawanda_user, similarity = get_dawanda_user_for etsy
 
-      @results << {
-          etsy: etsy_identity,
-          dawanda_user: dawanda_user
-      }
+      if dawanda_user
+        @results << {
+            etsy: etsy_identity,
+            dawanda_user: dawanda_user,
+            similarity: similarity
+        }
+      end
+
     end
 
   end
 
   def get_dawanda_user_for(etsy)
 
-    dw_results = DawandaUser.search etsy.name
-    dw_results.each do |dw|
-      if dw.name_similarity(etsy.name) > SIMILARITY_THRESHOLD
-        return dw
+    [etsy.name, etsy.about].each do |esty_attribute|
+      dw_results = DawandaUser.search esty_attribute
+      dw_results.each do |dw|
+        similarity = dw.name_similarity esty_attribute
+        if similarity > SIMILARITY_THRESHOLD
+          return dw, similarity
+        end
       end
     end
 
-    dw_results = DawandaUser.search etsy.about
-    dw_results.each do |dw|
-      if dw.name_similarity(etsy.about) > SIMILARITY_THRESHOLD
-        return dw
-      end
-    end
-
+    return nil, nil
   end
 
   def etsy_identities
