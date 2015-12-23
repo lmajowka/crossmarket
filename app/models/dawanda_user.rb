@@ -20,8 +20,8 @@ class DawandaUser < ActiveRecord::Base
     )
   end
 
-  def name_similarity(name_to_compare)
-    name.similar name_to_compare
+  def attribute_similarity(attribute_name, string_to_compare)
+    send(attribute_name).similar string_to_compare
   end
 
   private
